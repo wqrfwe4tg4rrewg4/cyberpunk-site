@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Cyberpunk 2077</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Orbitron',sans-serif;
+background:black;
+color:white;
+overflow-x:hidden;
+}
+
+/* Background */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#00ffff22,transparent 30%),
+radial-gradient(circle at bottom,#ffe60022,transparent 30%),
+black;
+z-index:-2;
+}
+
+body::after{
+content:'';
+position:fixed;
+inset:0;
+background:repeating-linear-gradient(
+to bottom,
+transparent,
+transparent 2px,
+rgba(255,255,255,0.02) 3px
+);
+pointer-events:none;
+z-index:-1;
+}
+
+/* NAV */
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px 60px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(20px);
+border-bottom:1px solid rgba(0,255,255,0.2);
+z-index:1000;
+}
+
+.logo{
+font-size:32px;
+font-weight:900;
+color:#ffe600;
+letter-spacing:5px;
+text-shadow:0 0 20px #ffe600;
+}
+
+nav ul{
+display:flex;
+gap:40px;
+list-style:none;
+}
+
+nav a{
+color:#00ffff;
+text-decoration:none;
+text-transform:uppercase;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#ffe600;
+text-shadow:0 0 10px #ffe600;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+position:relative;
+}
+
+.hero-content{
+max-width:1200px;
+}
+
+.hero-sub{
+color:#00ffff;
+letter-spacing:8px;
+text-transform:uppercase;
+margin-bottom:20px;
+animation:pulse 2s infinite;
+}
+
+.hero h1{
+font-size:clamp(70px,12vw,180px);
+color:#ffe600;
+text-shadow:0 0 40px #ffe600;
+}
+
+.hero h2{
+font-size:clamp(40px,6vw,90px);
+color:#00ffff;
+letter-spacing:15px;
+}
+
+.hero p{
+max-width:900px;
+margin:40px auto;
+font-size:clamp(18px,2vw,28px);
+line-height:1.7;
+color:#ddd;
+}
+
+/* BUTTONS */
+.btn{
+padding:22px 50px;
+border:none;
+font-size:18px;
+font-weight:700;
+cursor:pointer;
+border-radius:18px;
+text-transform:uppercase;
+transition:0.4s;
+letter-spacing:2px;
+}
+
+.btn-primary{
+background:#ffe600;
+color:black;
+box-shadow:0 0 40px #ffe600;
+}
+
+.btn-primary:hover{
+transform:scale(1.1);
+}
+
+.btn-secondary{
+background:transparent;
+border:2px solid #00ffff;
+color:#00ffff;
+}
+
+.hero-buttons{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-top:50px;
+}
+
+/* SECTIONS */
+section{
+padding:140px 8%;
+}
+
+.section-title{
+text-align:center;
+margin-bottom:80px;
+}
+
+.section-title p{
+color:#00ffff;
+letter-spacing:5px;
+margin-bottom:15px;
+}
+
+.section-title h2{
+font-size:clamp(45px,6vw,90px);
+color:#ffe600;
+text-shadow:0 0 20px #ffe600;
+}
+
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(0,255,255,0.2);
+backdrop-filter:blur(20px);
+padding:40px;
+border-radius:30px;
+transition:0.4s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+border-color:#ffe600;
+}
+
+.card h3{
+font-size:28px;
+margin-bottom:20px;
+color:#ffe600;
+}
+
+.card p{
+color:#ccc;
+line-height:1.7;
+}
+
+/* GALLERY REPLACED WITH TEXT NODES */
+.lore-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+}
+
+.lore{
+padding:40px;
+border-radius:30px;
+background:rgba(0,255,255,0.05);
+border:1px solid rgba(0,255,255,0.2);
+backdrop-filter:blur(20px);
+transition:0.4s;
+}
+
+.lore:hover{
+transform:scale(1.03);
+border-color:#00ffff;
+box-shadow:0 0 40px rgba(0,255,255,0.2);
+}
+
+.lore h3{
+color:#00ffff;
+margin-bottom:15px;
+font-size:24px;
+}
+
+.lore p{
+color:#ddd;
+line-height:1.7;
+}
+
+/* CTA */
+.cta{
+text-align:center;
+position:relative;
+}
+
+.cta h2{
+font-size:clamp(60px,8vw,140px);
+color:#ffe600;
+text-shadow:0 0 40px #ffe600;
+}
+
+.cta p{
+max-width:900px;
+margin:40px auto;
+font-size:24px;
+color:#ddd;
+}
+.steam-btn{
+display:inline-block;
+margin-top:40px;
+padding:30px 70px;
+font-size:24px;
+font-weight:900;
+background:#ffe600;
+color:black;
+text-decoration:none;
+border-radius:30px;
+text-transform:uppercase;
+box-shadow:0 0 50px #ffe600;
+transition:0.4s;
+}
+
+.steam-btn:hover{
+transform:scale(1.1);
+}
+
+/* FOOTER */
+footer{
+padding:50px;
+text-align:center;
+border-top:1px solid rgba(0,255,255,0.2);
+color:#666;
+}
+
+/* ANIM */
+@keyframes pulse{
+0%{opacity:1}
+50%{opacity:0.6}
+100%{opacity:1}
+}
+
+/* MOBILE */
+@media(max-width:900px){
+nav{
+flex-direction:column;
+gap:20px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div class="logo">CYBERPUNK 2077</div>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#lore">World</a></li>
+<li><a href="#download">Download</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<p class="hero-sub">WELCOME TO NIGHT CITY</p>
+
+<h1>CYBERPUNK</h1>
+<h2>2077</h2>
+
+<p>
+A world where corporations rule reality, implants replace humanity and every choice defines survival.
+</p>
+
+<div class="hero-buttons">
+<button class="btn btn-primary">ENTER NIGHT CITY</button>
+<button class="btn btn-secondary">WATCH TRAILER</button>
+</div>
+
+</div>
+
+</section>
+
+<section id="about">
+
+<div class="section-title">
+<p>ABOUT THE WORLD</p>
+<h2>THE CITY OF DREAMS</h2>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Night City</h3>
+<p>A mega-metropolis built on chaos, ambition and neon dreams.</p>
+</div>
+
+<div class="card">
+<h3>Cyberware</h3>
+<p>Enhance your body beyond human limits with advanced implants.</p>
+</div>
+
+<div class="card">
+<h3>Merc Life</h3>
+<p>Take dangerous jobs, survive betrayals and rise through the streets.</p>
+</div>
+
+<div class="card">
+<h3>Story</h3>
+<p>Shape your destiny in a cinematic branching narrative.</p>
+</div>
+
+</div>
+</section>
+
+<section id="features">
+
+<div class="section-title">
+<p>FEATURES</p>
+<h2>NEXT GEN EXPERIENCE</h2>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Open World</h3>
+<p>Explore a living cyberpunk metropolis full of secrets.</p>
+</div>
+
+<div class="card">
+<h3>Combat</h3>
+<p>Hack, shoot and upgrade your way through enemies.</p>
+</div>
+
+<div class="card">
+<h3>Customization</h3>
+<p>Build your identity through cybernetic enhancements.</p>
+</div>
+
+<div class="card">
+<h3>Immersion</h3>
+<p>Deep narrative choices affecting the entire world.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="lore">
+
+<div class="section-title">
+<p>WORLD DATA</p>
+<h2>NEURAL ARCHIVES</h2>
+</div>
+
+<div class="lore-grid">
+
+<div class="lore">
+<h3>District 1: Corpo Zone</h3>
+<p>Controlled by mega corporations, full of chrome towers and surveillance systems.</p>
+</div>
+
+<div class="lore">
+<h3>District 2: Neon Streets</h3>
+<p>The heart of nightlife, gangs, hackers and illegal cyberware dealers.</p>
+</div>
+
+<div class="lore">
+<h3>District 3: Industrial Wastelands</h3>
+<p>Abandoned factories and hidden black-market operations.</p>
+</div>
+
+<div class="lore">
+<h3>Underground Net</h3>
+<p>A hidden digital layer where hackers control the system.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="download" class="cta">
+
+<h2>DOWNLOAD<br>CYBERPUNK 2077</h2>
+
+<p>
+Become part of Night City and write your own story in a futuristic world of chaos and neon.
+</p>
+
+<a class="steam-btn" href="https://store.steampowered.com/app/1091500/Cyberpunk_2077/" target="_blank">
+DOWNLOAD ON STEAM
+</a>
+
+</section>
+
+<footer>
+CYBERPUNK 2077 — NEON FUTURISTIC EXPERIENCE
+</footer>
+
+</body>
+</html>
